@@ -5,9 +5,9 @@ function draw(data)
 		//removes column indicating time component
 		selectOptions = selectOptions.splice(1,selectOptions.length);
 		
-		var objX = {"Maximum Temperature" :"MAX_TEMP_DATA","Minimum Temperature":"MIN_TEMP_DATA","Rainfall":"RAINFALL_DATA","Cyclones\\Depressions":"SEVERE_WEATHER_DATA","Minimum Temp Anamoly":"MIN_TEMP_ANAM", "Maximum Temp Anamoly": "MAX_TEMP_ANAM"}
-		var objY = {"Minimum Temperature":"MIN_TEMP_DATA","Maximum Temperature" :"MAX_TEMP_DATA","Rainfall":"RAINFALL_DATA","Cyclones\\Depressions":"SEVERE_WEATHER_DATA","Minimum Temp Anamoly":"MIN_TEMP_ANAM", "Maximum Temp Anamoly": "MAX_TEMP_ANAM"}
-		var objSize = {"Rainfall":"RAINFALL_DATA","Maximum Temperature" :"MAX_TEMP_DATA","Minimum Temperature":"MIN_TEMP_DATA","Cyclones\\Depressions":"SEVERE_WEATHER_DATA","Minimum Temp Anamoly":"MIN_TEMP_ANAM", "Maximum Temp Anamoly": "MAX_TEMP_ANAM"}
+		var objX = {"Maximum Temperature" :"MAX_TEMP_DATA","Minimum Temperature":"MIN_TEMP_DATA","Rainfall":"RAINFALL_DATA","Cyclones\\Depressions":"SEVERE_WEATHER_DATA","Minimum Temp Anamoly":"MIN_TEMP_ANAM", "Maximum Temp Anamoly": "MAX_TEMP_ANAM"};
+		var objY = {"Minimum Temperature":"MIN_TEMP_DATA","Maximum Temperature" :"MAX_TEMP_DATA","Rainfall":"RAINFALL_DATA","Cyclones\\Depressions":"SEVERE_WEATHER_DATA","Minimum Temp Anamoly":"MIN_TEMP_ANAM", "Maximum Temp Anamoly": "MAX_TEMP_ANAM"};
+		var objSize = {"Rainfall":"RAINFALL_DATA","Maximum Temperature" :"MAX_TEMP_DATA","Minimum Temperature":"MIN_TEMP_DATA","Cyclones\\Depressions":"SEVERE_WEATHER_DATA","Minimum Temp Anamoly":"MIN_TEMP_ANAM", "Maximum Temp Anamoly": "MAX_TEMP_ANAM"};
 		var objColor = {"Month":"MONTH","Season":  "SEASON" };
 		
 		xOptions = Object.keys(objX);
@@ -30,10 +30,10 @@ function draw(data)
 						  .append("option")
 							.attr("value",function(d){ return d;})
 							.text(function(d) { return d;});
-		var span = body.append("span")
+		span = body.append("span")
 						.text("\u00A0");
 		
-		var span = body.append("span")
+		span = body.append("span")
 						.text("Select size Variable");
 		var sizeInput = body.append("select")
 							.attr("id","sizeSelect")
@@ -46,7 +46,7 @@ function draw(data)
 							.text(function(d) { return d;});
 		body.append("br");
 		body.append("br");
-		var span = body.append("span")
+		span = body.append("span")
 						.text("Select Y-Axis Variable");
 		var yInput = body.append("select")
 							.attr("id","ySelect")
@@ -57,12 +57,12 @@ function draw(data)
 						  .append("option")
 							.attr("value",function(d){ return d})
 							.text(function(d) { return d;});
-		var span = body.append("span")
+		span = body.append("span")
 						.text("\u00A0");
 							
-		var span = body.append("span")
+		span = body.append("span")
 						.text("Select color Variable");
-		var sizeInput = body.append("select")
+		sizeInput = body.append("select")
 							.attr("id","colorSelect")
 							.on("change",colorChange)
 						  .selectAll("option")
@@ -79,7 +79,7 @@ function draw(data)
 						right : 50,
 						bottom : 50,
 						left : 50
-					 }
+					 };
 		
 		var svgHeight = 550;
 		var svgWidth = 900;
@@ -114,10 +114,10 @@ function draw(data)
 		
 		var timeVar = "YEAR";
 				
-		var dropdown_x = d3.select("#xSelect")
+		var dropdown_x = d3.select("#xSelect");
 		var dropdown_y = d3.select("#ySelect");
-		var dropdown_size = d3.select("#sizeSelect")
-		var dropdown_color = d3.select("#colorSelect")
+		var dropdown_size = d3.select("#sizeSelect");
+		var dropdown_color = d3.select("#colorSelect");
 		
 		var xVar = objX[dropdown_x.node().options[dropdown_x.node().selectedIndex].value];
 	    var yVar = objY[dropdown_y.node().options[dropdown_y.node().selectedIndex].value];
@@ -146,10 +146,10 @@ function draw(data)
 		var sizeData_l = Math.min.apply(null,sizeData);
 		var sizeData_u = Math.max.apply(null, sizeData);
 	
-		var xData_r = xData_u - xData_l
-		var yData_r = yData_u - yData_l
+		var xData_r = xData_u - xData_l;
+		var yData_r = yData_u - yData_l;
 			
-		var x_axis = chart.addMeasureAxis("x", xVar)
+		var x_axis = chart.addMeasureAxis("x", xVar);
 		x_axis.overrideMin  = Math.floor(xData_l);
 		x_axis.overrideMax = Math.ceil(xData_u);
 		x_axis.ticks = 15;
@@ -171,14 +171,13 @@ function draw(data)
 		{
 	        console.log(d.frameValue);
         });
-			
+			story.frameDuration = 400;  
 		series = chart.addSeries("MONTH", dimple.plot.bubble);
 	
-		chart.addLegend(svgWidth-(margin.left * 8), margin.top, 300, buttonHeight);
+		chart.addLegend(svgWidth-(margin.left * 9), margin.top, 450, buttonHeight);
     	chart.draw();
-		d3.selectAll("circle").style("stroke-width", 2);
-			 
-		story.frameDuration = frame;  
+					 
+	
 		
 		
 		function xChange ()
@@ -196,8 +195,10 @@ function draw(data)
 			x_axis.ticks = 15;
 			x_axis.title = this.value;
 			
-            		
+    		
 			chart.draw();
+			
+			updateButton("Pause");
 		}
 		
 		function yChange ()
@@ -215,6 +216,8 @@ function draw(data)
 			y_axis.title = this.value;
             		
 			chart.draw();
+			
+			updateButton("Pause");
 			
 		}
 		
@@ -234,6 +237,8 @@ function draw(data)
             		
 			chart.draw();
 			
+			updateButton("Pause");
+			
 		}
 		
 		function colorChange ()
@@ -243,6 +248,8 @@ function draw(data)
 			
 			chart.data = dimple.filterData(data, filterColumn, value);
 			chart.draw();
+			
+			updateButton("Pause");
 		}
 		
 		function onClick() 
@@ -258,12 +265,13 @@ function draw(data)
 				button.classed("Play",false);
 				updateButton("Pause");
 				story.startAnimation();
+				story.frameDuration = 500;  
 			}
 		}
 	
 		function updateButton(newClass)
 		{
-			button.classed(newClass,true)
+			button.classed(newClass,true);
 			d3.select("#button text")
 				.transition()
 				.text(newClass);
